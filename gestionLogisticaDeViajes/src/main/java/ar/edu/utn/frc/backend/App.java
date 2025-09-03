@@ -27,7 +27,6 @@ public class App {
         //Variables
         ArrayList<Viaje> viajes = new ArrayList<>();
         HashMap<String, Cliente> clientesHashMap = new HashMap<>();
-        //int limit = 0;
 
         //Asignamos la ruta del archivo que vamos a leer
         File archivo = new File("viajes.csv");
@@ -36,7 +35,6 @@ public class App {
         try (Scanner sc = new Scanner(archivo)){
             sc.nextLine();
             while (sc.hasNextLine()){
-                //limit++;
                 //Asignamos los datos de la linea en la variable datos
                 String[] datos = sc.nextLine().split(";");
                 //Ahora sabemos que los primeros 4 datos son de la clase Viaje
@@ -48,7 +46,7 @@ public class App {
                 int millasAcumuladas = Integer.parseInt(datos[4]);
                 String codAerolinea = datos[5];
                 //Sabemos que los siguientes datos son de la clase TERRESTRE
-                String[] provinciasVisitadas = datos[6].split(";");
+                int provinciasVisitadas = Integer.parseInt(datos[6]);
                 int cantidadPasajeros = Integer.parseInt(datos[7]);
                 //Sabemos que los siguientes 3 datos son de la clase MARITIMO
                 int cantidadContenedores = Integer.parseInt(datos[8]);
@@ -57,19 +55,23 @@ public class App {
                 //Y por ultimo sabemos que los ultimos dos datos son de la clase CLIENTE
                 String nombreEmpresa = datos[11];
                 String cuit = datos[12];
+                 //Preguntamos si el HashMap del cliente contiene el cuit del cliente, es decir el identificador, si no lo contiene entonces agregamos el cliente
+                //Si lo contiene no agregamos nada ya que este HashMap no es un contador si no solamente para saber si el cliente ya fue registrado.    
+                Cliente cliente = null;
+                if(!clientesHashMap.containsKey(cuit)){
+                    cliente = new Cliente(nombreEmpresa, cuit);
+                    clientesHashMap.put(cuit, cliente);
+                }else {
+                    cliente = clientesHashMap.get(cuit);
+
+                }
                 //Luego de asignar los datos a cada variable procedemos a verificar que tipo de viaje es
                 //e INSTANCIARLO!!
-                Cliente cliente = new Cliente(nombreEmpresa, cuit);
                 switch (tipoViaje){
                     case "1":
                     //AEREO String codigo, int nroReserva, double precio, int tipo, Cliente cliente, int millasAcumuladas, String codAeroLinea
                     //Instanciamos el objeto Aereo con los datos de su super clase (VIAJE) y la de ella misma.
                     Aereo viajeAereo = new Aereo(codigo, nroReserva, precio, 1, cliente, millasAcumuladas,codAerolinea);
-                    //Preguntamos si el HashMap del cliente contiene el cuit del cliente, es decir el identificador, si no lo contiene entonces agregamos el cliente
-                    //Si lo contiene no agregamos nada ya que este HashMap no es un contador si no solamente para saber si el cliente ya fue registrado.
-                    if(!clientesHashMap.containsKey(cliente.getCuit())){
-                        clientesHashMap.put(cliente.getCuit(), cliente);
-                    }
                     //Agregamos el viaje a una colleccion tipo ArrayList de tipo <Viaje> el viaje. Especial atencion a que no falla por que AEREO hereda de Super.
                     //Asi como no falla cuando ponemos ArrayList<Object> y le añadimos cualquier clase. En este caso es igual.
                     viajes.add(viajeAereo);
@@ -77,27 +79,13 @@ public class App {
                     case "2":
                     //TERRESTRE String codigo, int nroReserva, double precio, int tipo, Cliente cliente, int provinciasVisitadas,
                     //Instanciamos el objeto Terrestre con los datos de su super clase (VIAJE) y la de ella misma.
-                    Terrestre viajeTerrestre = new Terrestre(codigo, nroReserva, precio, 2, cliente, provinciasVisitadas.length,cantidadPasajeros);
-                    //Preguntamos si el HashMap del cliente contiene el cuit del cliente, es decir el identificador, si no lo contiene entonces agregamos el cliente
-                    //Si lo contiene no agregamos nada ya que este HashMap no es un contador si no solamente para saber si el cliente ya fue registrado.
-                    if(!clientesHashMap.containsKey(cliente.getCuit())){
-                        clientesHashMap.put(cliente.getCuit(), cliente);
-                    }
-                    //Agregamos el viaje a una colleccion tipo ArrayList de tipo <Viaje> el viaje. Especial atencion a que no falla por que TERRESTRE hereda de Super.
-                    //Asi como no falla cuando ponemos ArrayList<Object> y le añadimos cualquier clase. En este caso es igual.
+                    Terrestre viajeTerrestre = new Terrestre(codigo, nroReserva, precio, 2, cliente, provinciasVisitadas,cantidadPasajeros);
                     viajes.add(viajeTerrestre);
                     break;
                     case "3":
                     //MARITIMO String codigo, int nroReserva, double precio, int tipo, Cliente cliente, int cantidadContenedores, double costoPorKilo, double pesoTransportado
                     //Instanciamos el objeto Maritimo con los datos de su super clase (VIAJE) y la de ella misma.
                     Maritimo viajeMaritimo = new Maritimo(codigo, nroReserva, precio, 3, cliente, cantidadContenedores, costoPorKilo, pesoTransportado);
-                    //Preguntamos si el HashMap del cliente contiene el cuit del cliente, es decir el identificador, si no lo contiene entonces agregamos el cliente
-                    //Si lo contiene no agregamos nada ya que este HashMap no es un contador si no solamente para saber si el cliente ya fue registrado.
-                    if(!clientesHashMap.containsKey(cliente.getCuit())){
-                        clientesHashMap.put(cliente.getCuit(), cliente);
-                    }
-                    //Agregamos el viaje a una colleccion tipo ArrayList de tipo <Viaje> el viaje. Especial atencion a que no falla por que MARITIMO hereda de Super.
-                    //Asi como no falla cuando ponemos ArrayList<Object> y le añadimos cualquier clase. En este caso es igual.
                     viajes.add(viajeMaritimo);
                     break;
                     
