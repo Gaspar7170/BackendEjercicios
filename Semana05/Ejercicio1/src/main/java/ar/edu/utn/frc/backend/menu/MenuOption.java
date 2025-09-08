@@ -11,6 +11,7 @@ public class MenuOption implements Comparable<MenuOption> {
         this.action = action;
     }
 
+
     @Override
     public int compareTo(MenuOption o) {
         return Integer.compare(this.code, o.code);
