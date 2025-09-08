@@ -1,5 +1,7 @@
 package ar.edu.utn.frc.backend.menu;
 
+import ar.edu.utn.frc.backend.ApplicationContext;
+
 @FunctionalInterface
 /*
 FuncAction (interfaz funcional)
@@ -8,6 +10,6 @@ Firma: void run() (sin parámetros en esta etapa).
 Criterio de aceptación: debe permitir usar lambdas y method references. Con @FunctionalInterface.
 */
 public interface FuncAction {
-    void run();
+    void run(ApplicationContext context);
 
 }

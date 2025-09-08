@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import ar.edu.utn.frc.backend.ApplicationContext;
+
 /*
 Rol: mostrar opciones, leer entrada, resolver la acción y ejecutarla.
 Requisitos:
@@ -36,7 +38,7 @@ public class Menu implements FuncAction {
     }
 
     @Override
-    public void run() {
+    public void run(ApplicationContext ctx) {
         //Validaciones
         validaciones();
         // Ordenar las opciones por código
@@ -45,6 +47,7 @@ public class Menu implements FuncAction {
         // Mostrar el menú y manejar la selección del usuario
         System.out.println("=== " + nombre + " ===");
         Scanner sc = new Scanner(System.in);
+        ctx.put("in", sc);
         int opcion = -1;
         while(opcion != 0){
             for (MenuOption option : opciones) {
@@ -58,7 +61,7 @@ public class Menu implements FuncAction {
                     //BUSCAMOS LA OPCION SELECCIONADA
                     for (MenuOption option : opciones) {
                         if(option.code == opcion){
-                            option.action.run();
+                            option.action.run(ctx);
                         }
                     }
                 } else if (opcion != 0) {
