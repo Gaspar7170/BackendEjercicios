@@ -1,4 +1,4 @@
-package ar.edu.utn.frc.backend;
+package com.frc.isi.museo.app;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
