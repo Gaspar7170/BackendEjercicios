@@ -12,14 +12,18 @@ public class Menu {
     public List<ItemMenu> opciones = new java.util.ArrayList<>();
 
     private int safeInt(Scanner in) {
-        while (!in.hasNextInt()) {
-            in.next();
-            System.out.print("> Opción: ");
+    while (true) {
+        String line = in.nextLine().trim();
+        try {
+            return Integer.parseInt(line);
+        } catch (NumberFormatException e) {
+            System.out.print("> Opción inválida. Ingrese un número: ");
         }
-        int n = in.nextInt();
-        in.nextLine();
-        return n;
     }
+}
+
+
+    
 
     public void addOpcion(ItemMenu opcion) {
         this.opciones.add(opcion);
@@ -27,7 +31,7 @@ public class Menu {
 
     public void ejecutar(ApplicationContext contexto) {
         var lector = new Scanner(System.in);
-        contexto.setOrThrow("lector", lector);
+        contexto.put("lector", lector);
         try {
 
             while (true) {
@@ -39,6 +43,7 @@ public class Menu {
 
                 if (opcion == 0)
                     break;
+                else{
 
                 this.opciones.stream()
                         .filter(o -> o.indice() == opcion)
@@ -46,13 +51,12 @@ public class Menu {
                         .ifPresentOrElse(
                                 o -> o.accion().invocar(contexto),
                                 () -> System.out.println("Opcion invalida...."));
+                }
 
             }
 
         } catch (IllegalArgumentException | NoSuchElementException ex) {
             System.out.println(ex.getMessage());
-        } finally {
-            lector.close();
         }
 
         System.out.println("Apliacion terminada.....");

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 public class ApplicationContext {
 
     // Patrón Singleton — inicialización *lazy* vía holder

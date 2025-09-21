@@ -15,4 +15,9 @@ public class EstiloArtistico {
     private int id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
+	
+    public EstiloArtistico(String nombre) {
+		this.nombre = nombre;
+	}
+    
 }

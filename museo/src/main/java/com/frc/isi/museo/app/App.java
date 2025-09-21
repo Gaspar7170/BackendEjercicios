@@ -1,6 +1,6 @@
 package com.frc.isi.museo.app;
 
-import java.net.URL;
+import java.io.File;
 
 import com.frc.isi.museo.menu.ApplicationContext;
 import com.frc.isi.museo.menu.ItemMenu;
@@ -18,11 +18,15 @@ public class App {
 
         Acciones acciones = new Acciones();
 
-        URL folderPath = App.class.getResource("/files");
-        ctx.set("path", folderPath);
+        File archivo = new File("src/main/resources/files/obras.csv");
+        ctx.put("path", archivo);
+        
 
         // Las otras acciones van aqui
         menu.addOpcion(new ItemMenu(0, "Salir", p -> System.exit(1)));
+        menu.addOpcion(new ItemMenu(1, "Listar Obras", acciones::listarObras));
+
+        menu.ejecutar(ctx);
 
     }
 }

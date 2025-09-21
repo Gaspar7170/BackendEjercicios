@@ -16,5 +16,9 @@ public class Autor {
     private int id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
+	public Autor(String nombre) {
+		this.nombre = nombre;
+	}
+    
 
 }

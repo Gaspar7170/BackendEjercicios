@@ -16,4 +16,8 @@ public class Museo {
     private int id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
+	public Museo(String nombre) {
+		this.nombre = nombre;
+	}
+    
 }

@@ -2,7 +2,7 @@ package ar.edu.utnfrc.backend.Entidades;
 
 public class Mascota {
     private String nombre;
-    private double energia;
+    private int energia;
     private int humor;
     private boolean estado = false;
     private boolean durmiendo = false;
@@ -10,7 +10,7 @@ public class Mascota {
     private int contadorActividad = 0;
 
 
-    public Mascota(String nombre, double energia, int humor ) {
+    public Mascota(String nombre, int energia, int humor ) {
         this.nombre = nombre;
         this.energia = 50; // Valor inicial de energía
         this.humor = 3; // Valor inicial de humor
@@ -34,7 +34,7 @@ public class Mascota {
         }
 
         if (energia < 100){
-            energia += energia*0.1;
+            energia += (int) energia*0.1;
             if (energia > 100){
                 energia = 100;
             }
@@ -66,7 +66,7 @@ public class Mascota {
         
         contadorActividad = 0;
         if (energia < 100){
-            energia += energia*0.05;
+            energia += (int) energia*0.05;
             if (energia > 100){
                 energia = 100;
             }
@@ -87,7 +87,7 @@ public class Mascota {
         System.out.println("Corriendo...");
        
         contadorIngesta = 0;
-        energia -= energia*0.35;
+        energia -=(int) energia*0.35;
         humor -= 2;
         
         if (comprobacionEnergia()){return true;}
@@ -108,7 +108,7 @@ public class Mascota {
         System.out.println("Saltando...");
         
         contadorIngesta = 0;
-        energia -= energia*0.15;
+        energia -= (int) energia*0.15;
         humor -= 2;
         if (comprobacionEnergia()){return true;}
 
